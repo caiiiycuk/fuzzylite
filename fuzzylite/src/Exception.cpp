@@ -19,7 +19,7 @@
 
 #ifdef FL_BACKTRACE
 
-#ifdef FL_UNIX
+#if defined(FL_UNIX) && !defined(EMSCRIPTEN)
 #include <execinfo.h>
 
 #elif defined FL_WINDOWS
@@ -90,7 +90,7 @@ namespace fl {
     std::string Exception::btCallStack() {
 #ifndef FL_BACKTRACE
         return "[backtrace disabled] fuzzylite was built without -DFL_BACKTRACE";
-#elif defined FL_UNIX
+#elif defined(FL_UNIX) && !defined(EMSCRIPTEN)
         std::ostringstream btStream;
         const int bufferSize = 30;
         void* buffer[bufferSize];
